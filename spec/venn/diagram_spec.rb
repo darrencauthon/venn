@@ -55,4 +55,36 @@ describe Venn::Diagram do
       end
     end
   end
+
+  describe "three sets of data with a few matches" do
+    before do
+      diagram.a_is ['abc', 'ab', 'ac', 'a']
+      diagram.b_is ['abc', 'ab', 'bc', 'b']
+      diagram.c_is ['abc', 'bc', 'ac', 'c']
+    end
+
+    it "should return a" do
+      diagram.a_only.must_equal ['a']
+    end
+
+    it "should return b" do
+      diagram.b_only.must_equal ['b']
+    end
+
+    it "should return c" do
+      diagram.c_only.must_equal ['c']
+    end
+
+    it "should return a and b" do
+      diagram.a_and_b.must_equal ['ab']
+    end
+
+    it "should return b and c" do
+      diagram.b_and_c.must_equal ['bc']
+    end
+
+    it "should return a and c" do
+      diagram.a_and_c.must_equal ['ac']
+    end
+  end
 end
