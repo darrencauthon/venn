@@ -10,15 +10,15 @@ module Venn
     end
 
     def a_only
-      @a
+      @a.select { |a| @b.include?(a) == false }
     end
 
     def b_only
-      @b
+      @b.select { |b| @a.include?(b) == false }
     end
 
     def a_and_b
-      []
+      @a.select { |a| @b.include? a }
     end
   end
 end

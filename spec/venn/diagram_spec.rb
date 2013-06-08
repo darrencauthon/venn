@@ -31,4 +31,28 @@ describe Venn::Diagram do
       end
     end
   end
+
+  [:a, :b, :a_only, :b_only, :a_and_b].to_objects {[
+    [[1, 2], [2, 3], [1], [3], [2]],
+    [['a', 'b'], ['b', 'c'], ['a'], ['c'], ['b']]
+  ]}.each do |test|
+    describe "one match" do
+      before do
+        diagram.a_is test.a
+        diagram.b_is test.b
+      end
+
+      it "should return a" do
+        diagram.a_only.must_equal test.a_only
+      end
+
+      it "should return b" do
+        diagram.b_only.must_equal test.b_only
+      end
+    
+      it "should return the one match for a and b" do
+        diagram.a_and_b.must_equal test.a_and_b
+      end
+    end
+  end
 end
