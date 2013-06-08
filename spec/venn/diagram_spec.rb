@@ -87,6 +87,46 @@ describe Venn::Diagram do
       it "should return a and c" do
         diagram.a_and_c.must_equal ['ac']
       end
+
+      it "should return a and b and c" do
+        diagram.a_and_b_and_c.must_equal ['abc']
+      end
+    end
+
+    describe "second example" do
+      before do
+        diagram.a_is ['xyz', 'xy', 'xz', 'x']
+        diagram.b_is ['xyz', 'xy', 'yz', 'y']
+        diagram.c_is ['xyz', 'yz', 'xz', 'z']
+      end
+
+      it "should return a" do
+        diagram.a_only.must_equal ['x']
+      end
+
+      it "should return b" do
+        diagram.b_only.must_equal ['y']
+      end
+
+      it "should return c" do
+        diagram.c_only.must_equal ['z']
+      end
+
+      it "should return a and b" do
+        diagram.a_and_b.must_equal ['xy']
+      end
+
+      it "should return b and c" do
+        diagram.b_and_c.must_equal ['yz']
+      end
+
+      it "should return a and c" do
+        diagram.a_and_c.must_equal ['xz']
+      end
+
+      it "should return a and b and c" do
+        diagram.a_and_b_and_c.must_equal ['xyz']
+      end
     end
   end
 end

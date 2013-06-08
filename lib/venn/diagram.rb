@@ -1,47 +1,76 @@
 module Venn
   class Diagram
 
+    def initialize
+      @values = {}
+    end
+
     def a_is values
-      @a = values
+      @values[:a] = values
     end
 
     def b_is values
-      @b = values
+      @values[:b] = values
     end
 
     def c_is values
-      @c_set = true
+      @values[:c] = values
     end
 
     def c_only
-      ['c']
+      @values[:c].select do |a| 
+        keys = @values.keys.select { |x| x != :c }
+        keys.select do |key|
+          @values[key].include?(a)
+        end.count == 0
+      end
     end
 
     def a_only
-      return ['a'] if @c_set
-      @a.select { |a| @b.include?(a) == false }
+      @values[:a].select do |a| 
+        keys = @values.keys.select { |x| x != :a }
+        keys.select do |key|
+          @values[key].include?(a)
+        end.count == 0
+      end
     end
 
     def b_only
-      return ['b'] if @c_set
-      @b.select { |b| @a.include?(b) == false }
+      @values[:b].select do |a| 
+        keys = @values.keys.select { |x| x != :b }
+        keys.select do |key|
+          @values[key].include?(a)
+        end.count == 0
+      end
     end
 
     def a_and_b
-      return ['ab'] if @c_set
-      @a.select { |a| @b.include? a }
+      @values[:c] ||= []
+      @values[:a].select do |a|
+        @values[:b].include? a and
+          @values[:c].include?(a) == false
+      end
     end
 
     def b_and_c
-      ['bc']
+      @values[:b].select do |b|
+        @values[:c].include? b and
+          @values[:a].include?(b) == false
+      end
     end
 
     def a_and_c
-      ['ac']
+      @values[:a].select do |b|
+        @values[:c].include? b and
+          @values[:b].include?(b) == false
+      end
     end
 
     def a_and_b_and_c
-      ['abc']
+      @values[:a].select do |b|
+        @values[:c].include? b and
+          @values[:b].include?(b)
+      end
     end
   end
 end
