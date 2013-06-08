@@ -17,15 +17,6 @@ module Venn
       @values[:c] = values
     end
 
-    def c_only
-      @values[:c].select do |a| 
-        keys = @values.keys.select { |x| x != :c }
-        keys.select do |key|
-          @values[key].include?(a)
-        end.count == 0
-      end
-    end
-
     def a_only
       @values[:a].select do |a| 
         keys = @values.keys.select { |x| x != :a }
@@ -44,6 +35,15 @@ module Venn
       end
     end
 
+    def c_only
+      @values[:c].select do |a| 
+        keys = @values.keys.select { |x| x != :c }
+        keys.select do |key|
+          @values[key].include?(a)
+        end.count == 0
+      end
+    end
+
     def a_and_b
       @values[:c] ||= []
       @values[:a].select do |a|
@@ -52,17 +52,17 @@ module Venn
       end
     end
 
-    def b_and_c
-      @values[:b].select do |b|
-        @values[:c].include? b and
-          @values[:a].include?(b) == false
-      end
-    end
-
     def a_and_c
       @values[:a].select do |b|
         @values[:c].include? b and
           @values[:b].include?(b) == false
+      end
+    end
+
+    def b_and_c
+      @values[:b].select do |b|
+        @values[:c].include? b and
+          @values[:a].include?(b) == false
       end
     end
 
