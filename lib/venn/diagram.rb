@@ -18,59 +18,58 @@ module Venn
     end
 
     def a_only
-      @values[:a].select do |a| 
-        keys = @values.keys.select { |x| x != :a }
-        keys.select do |key|
-          @values[key].include?(a)
-        end.count == 0
+      @values[:a].select do |value| 
+        is_not_in?(value, :b) && is_not_in?(value, :c)
       end
     end
 
     def b_only
-      @values[:b].select do |a| 
-        keys = @values.keys.select { |x| x != :b }
-        keys.select do |key|
-          @values[key].include?(a)
-        end.count == 0
+      @values[:b].select do |value| 
+        is_not_in?(value, :a) && is_not_in?(value, :c)
       end
     end
 
     def c_only
-      @values[:c].select do |a| 
-        keys = @values.keys.select { |x| x != :c }
-        keys.select do |key|
-          @values[key].include?(a)
-        end.count == 0
+      @values[:c].select do |value| 
+        is_not_in?(value, :a) && is_not_in?(value, :b)
       end
     end
 
     def a_and_b
-      @values[:c] ||= []
-      @values[:a].select do |a|
-        @values[:b].include? a and
-          @values[:c].include?(a) == false
+      @values[:a].select do |value|
+        is_in?(value, :b) && is_not_in?(value, :c)
       end
     end
 
     def a_and_c
-      @values[:a].select do |b|
-        @values[:c].include? b and
-          @values[:b].include?(b) == false
+      @values[:a].select do |value|
+        is_in?(value, :c) && is_not_in?(value, :b)
       end
     end
 
     def b_and_c
-      @values[:b].select do |b|
-        @values[:c].include? b and
-          @values[:a].include?(b) == false
+      @values[:b].select do |value|
+        is_in?(value, :c) && is_not_in?(value, :a)
       end
     end
 
     def a_and_b_and_c
-      @values[:a].select do |b|
-        @values[:c].include? b and
-          @values[:b].include?(b)
+      @values[:a].select do |value|
+        is_in?(value, :b) && is_in?(value, :c)
       end
+    end
+
+    private
+    def is_in?(value, key)
+      @values[key].include? value
+    rescue
+      false
+    end
+
+    def is_not_in?(value, key)
+      @values[key].include?(value) == false
+    rescue
+      true
     end
   end
 end
