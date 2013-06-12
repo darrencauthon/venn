@@ -5,16 +5,10 @@ module Venn
       @values = {}
     end
 
-    def a_is values
-      @values[:a] = values
-    end
-
-    def b_is values
-      @values[:b] = values
-    end
-
-    def c_is values
-      @values[:c] = values
+    def method_missing(meth, *args, &blk)
+      #if ['a_is', 'b_is', 'c_is'].include? meth.to_s
+        @values[meth[0].to_sym] = args[0]
+      #end
     end
 
     def a_only
