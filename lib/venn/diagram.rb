@@ -14,30 +14,20 @@ module Venn
           @values.keys.select { |k| k != id }.
             select { |key| is_in?(value, key) }.count == 0
         end
-      end
-    end
-
-    def a_and_b
-      @values[:a].select do |value|
-        is_in?(value, :b) && is_not_in?(value, :c)
-      end
-    end
-
-    def a_and_c
-      @values[:a].select do |value|
-        is_in?(value, :c) && is_not_in?(value, :b)
-      end
-    end
-
-    def b_and_c
-      @values[:b].select do |value|
-        is_in?(value, :c) && is_not_in?(value, :a)
-      end
-    end
-
-    def a_and_b_and_c
-      @values[:a].select do |value|
-        is_in?(value, :b) && is_in?(value, :c)
+      else
+        ins = meth.to_s.split('_and_').map { |x| x.to_sym }
+        outs = @values.keys.select { |x| ins.include?(x) == false }
+        now = @values[ins.first.to_sym].select do |x|
+                ins.select do |i|
+                  @values[i.to_sym].include? x
+                end.count == ins.count
+              end
+        now = now.select do |x|
+          outs.select do |o|
+            @values[o.to_s.to_sym].include?(x)
+          end.count == 0
+        end
+        now
       end
     end
 
