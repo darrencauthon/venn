@@ -6,26 +6,14 @@ module Venn
     end
 
     def method_missing(meth, *args, &blk)
-      #if ['a_is', 'b_is', 'c_is'].include? meth.to_s
-        @values[meth[0].to_sym] = args[0]
-      #end
-    end
-
-    def a_only
-      @values[:a].select do |value| 
-        is_not_in?(value, :b) && is_not_in?(value, :c)
-      end
-    end
-
-    def b_only
-      @values[:b].select do |value| 
-        is_not_in?(value, :a) && is_not_in?(value, :c)
-      end
-    end
-
-    def c_only
-      @values[:c].select do |value| 
-        is_not_in?(value, :a) && is_not_in?(value, :b)
+      if meth[-3, 3] == '_is'
+        @values[meth[0, meth.length - 3].to_sym] = args[0]
+      elsif meth[-5, 5] == '_only'
+        id = meth[0, meth.length - 5].to_sym
+        @values[id].select do |value| 
+          @values.keys.select { |k| k != id }.
+            select { |key| is_in?(value, key) }.count == 0
+        end
       end
     end
 
