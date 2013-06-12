@@ -17,17 +17,16 @@ module Venn
       else
         ins = meth.to_s.split('_and_').map { |x| x.to_sym }
         outs = @values.keys.select { |x| ins.include?(x) == false }
-        now = @values[ins.first.to_sym].select do |x|
-                ins.select do |i|
-                  @values[i.to_sym].include? x
-                end.count == ins.count
-              end
-        now = now.select do |x|
+        matches = @values[ins.first].select do |x|
+                    ins.select do |i|
+                      @values[i].include? x
+                    end.count == ins.count
+                  end
+        matches.select do |x|
           outs.select do |o|
-            @values[o.to_s.to_sym].include?(x)
+            @values[o].include?(x)
           end.count == 0
         end
-        now
       end
     end
 
