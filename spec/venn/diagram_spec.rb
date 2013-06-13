@@ -152,4 +152,17 @@ describe Venn::Diagram do
       diagram.good_items_and_bad_items.must_equal ['b']
     end
   end
+
+  describe "a more complex example" do
+    before do
+      diagram.fizz_items_are [3,  6,  9, 12, 15, 18, 21]
+      diagram.buzz_items_are [5, 10, 15, 20, 25, 30, 35]
+    end
+
+    it "should return the expected results" do
+      diagram.fizz_items_only [3, 6, 9, 12, 18, 21]
+      diagram.buzz_items_only [5, 10, 20, 25, 30, 35]
+      diagram.fizz_items_and_buzz_items [15]
+    end
+  end
 end

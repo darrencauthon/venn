@@ -1,29 +1,29 @@
 # Venn
 
-TODO: Write a gem description
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'venn'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install venn
+Build venn diagrams to find matches
 
 ## Usage
 
-TODO: Write usage instructions here
+````
+diagram = Venn::Diagram.new
 
-## Contributing
+diagram.a_is ['blue', 'green']
+diagram.b_is ['purple', 'blue']
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+diagram.a_only  # ['green']
+diagram.b_only  # ['purple']
+diagram.a_and_b # ['blue']
+````
+
+or
+
+````
+diagram = Venn::Diagram.new
+
+diagram.fizz_items_are [3,  6,  9, 12, 15, 18, 21]
+diagram.buzz_items_are [5, 10, 15, 20, 25, 30, 35]
+
+diagram.fizz_items_only [3, 6, 9, 12, 18, 21]
+diagram.buzz_items_only [5, 10, 20, 25, 30, 35]
+diagram.fizz_items_and_buzz_items [15]
+````
