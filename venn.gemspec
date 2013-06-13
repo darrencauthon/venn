@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Venn::VERSION
   spec.authors       = ["Darren Cauthon"]
   spec.email         = ["darren@cauthon.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Simple venn diagrams}
+  spec.summary       = %q{Simple venn diagrams}
   spec.homepage      = ""
   spec.license       = "MIT"
 
