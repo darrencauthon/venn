@@ -139,4 +139,17 @@ describe Venn::Diagram do
       diagram.a_only.must_equal ['a']
     end
   end
+
+  describe "setting values with more than one letter" do
+    before do
+      diagram.good_items_are ['a', 'b']
+      diagram.bad_items_are  ['b', 'c']
+    end
+
+    it "should have set the value" do
+      diagram.good_items_only.must_equal ['a']
+      diagram.bad_items_only.must_equal  ['c']
+      diagram.good_items_and_bad_items.must_equal ['b']
+    end
+  end
 end
