@@ -10,6 +10,10 @@ module Venn
         id = meth[0, meth.length - 3].to_sym
         value = args[0]
         set_single_value id, value
+      elsif meth[-4, 4] == '_are'
+        id = meth[0, meth.length - 4].to_sym
+        value = args[0]
+        set_single_value id, value
       elsif meth[-5, 5] == '_only'
         id = meth[0, meth.length - 5].to_sym
         find_exclusive_values_in id

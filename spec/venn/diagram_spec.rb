@@ -129,4 +129,14 @@ describe Venn::Diagram do
       end
     end
   end
+
+  describe "setting values with are" do
+    before do
+      diagram.a_are ['a']
+    end
+
+    it "should have set the value" do
+      diagram.a_only.must_equal ['a']
+    end
+  end
 end
